@@ -13,10 +13,10 @@ $section = '';
 $cookieCode = isset($_COOKIE['studentcode']) ? $_COOKIE['studentcode'] : '';
 
 switch ($_SERVER['PHP_SELF']) {
-    case '/new1/zadanie/listpage.php':
+    case '/listpage.php':
         $section = 'listpage';
         break;
-    case '/new1/zadanie/formpage.php':
+    case '/formpage.php':
         $section = 'formpage';
         break;
 }
