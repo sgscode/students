@@ -29,3 +29,9 @@ function setXsrfCookie()
     }
     return $cookieXsrf;
 }
+
+//highlighting word
+function hlw($string, $userSearch){
+    $replaceStr = '<span style="background-color:yellow">'. $userSearch .'</span>';
+    return str_replace($userSearch, $replaceStr, $string);
+}

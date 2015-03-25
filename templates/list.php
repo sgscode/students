@@ -20,10 +20,10 @@
 
     <?php foreach ($students as $student) { ?>
       <tr>
-        <td><?= h($student->getName()) ?></td>
-        <td><?= h($student->getSurname()) ?> </td>
-        <td><?= h($student->getGroupNumber()) ?> </td>
-        <td><?= h($student->getScores()) ?> </td>
+        <td><?= hlw(h($student->getName()), h($userSearch)) ?></td>
+        <td><?= hlw(h($student->getSurname()), h($userSearch)) ?> </td>
+        <td><?= hlw(h($student->getGroupNumber()), h($userSearch)) ?> </td>
+        <td><?= hlw(h($student->getScores()), h($userSearch)) ?> </td>
       </tr>
     <?php } ?>
 
