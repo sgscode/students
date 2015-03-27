@@ -11,7 +11,7 @@ $success = isset($_GET['success']) ? trim($_GET['success']) : 'fail';
 
 
 
-$mapper = new StudentMapper($DBH);
+
 $students = $mapper->searchStudents($userSearch, $orderDirection, $orderColumn, $startRecord, $recordPerPage);
 $countRecord = $mapper->getCountRecords($userSearch);
 $navigator = new PageNavigator($userSearch, $orderDirection, $orderColumn, $recordPerPage, $countRecord);

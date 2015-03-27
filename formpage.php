@@ -4,16 +4,12 @@ require_once '/lib/bootstrap.php';
 
 $section = 'formpage';
 $cookieXsrf = setXsrfCookie();
-$mapper = new StudentMapper($DBH);
 $student = new Student();
 $emailExist = false;
 $errorXsrf = '';
 
-if ($cookieCode) {
-    $std = $mapper->fetchStudentByCode($cookieCode);
-    if ($std){
-        $student = $std;
-    }
+if ($loggedIn) {
+    $student = $mapper->fetchStudentByCode($cookieCode);
 }
 
 if (isset($_POST['submit'])) {
