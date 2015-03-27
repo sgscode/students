@@ -10,7 +10,10 @@ $emailExist = false;
 $errorXsrf = '';
 
 if ($cookieCode) {
-    $student = $mapper->fetchStudentByCode($cookieCode);
+    $std = $mapper->fetchStudentByCode($cookieCode);
+    if ($std){
+        $student = $std;
+    }
 }
 
 if (isset($_POST['submit'])) {
@@ -33,8 +36,6 @@ if (isset($_POST['submit'])) {
     }
 }
 
-
-
 function updateStudent(Student $student, StudentMapper $mapper)
 {
     $mapper->updateStudent($student);
@@ -45,15 +46,15 @@ function updateStudent(Student $student, StudentMapper $mapper)
 function createStudent(Student $student, StudentMapper $mapper)
 {
     $student->generateCode();
-    while ($mapper->isCodeUsed($student)) {
+    $code=$student->getCode();
+    while ($mapper->isCodeExist($code)) {
         $student->generateCode();
+        $code=$student->getCode();
     }
     $mapper->createStudent($student);
     setcookie('studentcode', $student->getCode(), strtotime('+5 year'), '/');
     header('Location: listpage.php?success=create');
     die();
 }
-
-
 
 include '/templates/form.php';

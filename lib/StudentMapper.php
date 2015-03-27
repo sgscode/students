@@ -59,9 +59,8 @@ class StudentMapper
         return $STH->fetchColumn();
     }
 
-    public function isCodeUsed(Student $student)
+    public function isCodeExist($code)
     {
-        $code = $student->getCode();
         $STH = $this->DBH->prepare("SELECT count(*) FROM students WHERE code=:code");
         $STH->bindValue(":code", $code);
         $STH->execute();
