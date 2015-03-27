@@ -12,13 +12,5 @@ $DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $section = '';
 $cookieCode = isset($_COOKIE['studentcode']) ? $_COOKIE['studentcode'] : '';
 
-switch ($_SERVER['PHP_SELF']) {
-    case '/listpage.php':
-        $section = 'listpage';
-        break;
-    case '/formpage.php':
-        $section = 'formpage';
-        break;
-}
 
 

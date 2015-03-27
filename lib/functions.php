@@ -1,5 +1,7 @@
 <?php
 
+const XSRF_LENGTH = 32;
+
 function h($str)
 {
     return htmlspecialchars($str, ENT_QUOTES);
@@ -11,8 +13,8 @@ function createXsrfCookie()
     $strLen = mb_strlen($string);
     $newString = "";
 
-    for ($i = 0; $i < 32; $i++) {
-        $newString .= $string[mt_rand(0, $strLen - 1)];
+    for ($i = 0; $i < XSRF_LENGTH; $i++) {
+        $newString .= mb_substr($string, mt_rand(0, $strLen - 1), 1);
     }
 
     return $newString;
@@ -31,7 +33,7 @@ function setXsrfCookie()
 }
 
 //highlighting word
-function hlw($string, $userSearch){
+function highlighting($string, $userSearch){
     $replaceStr = '<span style="background-color:yellow">'. $userSearch .'</span>';
     return str_replace($userSearch, $replaceStr, $string);
 }

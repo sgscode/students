@@ -2,7 +2,7 @@
 
 require_once '/lib/bootstrap.php';
 
-
+$section = 'formpage';
 $cookieXsrf = setXsrfCookie();
 $mapper = new StudentMapper($DBH);
 $student = new Student();
@@ -10,12 +10,12 @@ $emailExist = false;
 $errorXsrf = '';
 
 if ($cookieCode) {
-    $student = $mapper->fetchStudent($cookieCode);
+    $student = $mapper->fetchStudentByCode($cookieCode);
 }
 
 if (isset($_POST['submit'])) {
     $formXsrf = isset($_POST['xsrfForm']) ? $_POST['xsrfForm'] : '';
-    if ($formXsrf == $cookieXsrf) {
+    if ($formXsrf === $cookieXsrf) {
         $student->setFields($_POST);
         if ($mapper->isEmailUsed($student)) {
             $emailExist = true;

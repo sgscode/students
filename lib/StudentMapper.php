@@ -68,7 +68,7 @@ class StudentMapper
         return $STH->fetchColumn();
     }
 
-    public function fetchStudent($code)
+    public function fetchStudentByCode($code)
     {
         $STH = $this->DBH->prepare("SELECT name, surname, email, groupNumber, scores, year_Of_Birth as yearOfBirth, residence, gender, code
                                 FROM students WHERE code=:code");

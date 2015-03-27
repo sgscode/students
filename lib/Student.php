@@ -3,6 +3,7 @@
 class Student
 {
 
+    const CODE_LENGTH = 32;
     protected $name = "";
     protected $surname = "";
     protected $gender = "";
@@ -13,15 +14,17 @@ class Student
     protected $residence = "";
     protected $code = "";
     protected $errorsText = [];
+   
 
     public function generateCode()
     {
+        
         $string = "qwertyuiopasdfghjklzxcvbnm1234567890";
         $strLen = mb_strlen($string);
         $newString = "";
 
-        for ($i = 0; $i < 32; $i++) {
-            $newString .= $string[mt_rand(0, $strLen - 1)];
+        for ($i = 0; $i < self::CODE_LENGTH; $i++) {
+            $newString .= mb_substr($string, mt_rand(0, $strLen - 1), 1);
         }
 
         $this->code = $newString;
@@ -48,16 +51,16 @@ class Student
 
     public function checkFields()
     {
-        $charRegExp = "/^[а-яa-zё-]{2,100}$/ui";
+        $charRegExp = "/^[а-яa-zё-]{1,100}$/ui";
         $numRegExp = "/^[0-9]+$/";
         $mailRegExp = "/@/";
         $groupRegExp = "/^[0-9а-яa-zё]{5}$/ui";
         
         if (!preg_match($charRegExp, $this->name)) {
-            $this->errorsText["name"] = "должно состоять только из букв и быть длиной от 2 до 100 символов";
+            $this->errorsText["name"] = "должно состоять только из букв и быть длиной от 1 до 100 символов";
         }
         if (!preg_match($charRegExp, $this->surname)) {
-            $this->errorsText["surname"] = "должна состоять только из букв и быть длиной от 2 до 100 символов";
+            $this->errorsText["surname"] = "должна состоять только из букв и быть длиной от 1 до 100 символов";
         }
         if (!isset($this->gender)) {
             $this->errorsText["sex"] = "Пол неверно введен или отсутствует";

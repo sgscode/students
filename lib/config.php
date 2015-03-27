@@ -1,6 +1,6 @@
 <?php
 
-$recordPerPage = 10;
+$recordPerPage = 20;
 $dbHost = 'localhost';
 $dbName = 'students';
 $dbUser = 'testu';

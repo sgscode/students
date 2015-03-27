@@ -2,7 +2,7 @@
 
 require_once '/lib/bootstrap.php';
 
-
+$section = 'listpage';
 $userSearch = isset($_GET['userSearch']) ? trim($_GET['userSearch']) : '';
 $orderDirection = isset($_GET['orderDirection']) ? trim($_GET['orderDirection']): 'DESC';
 $orderColumn = isset($_GET['orderColumn']) ? trim($_GET['orderColumn']) : 'scores';
