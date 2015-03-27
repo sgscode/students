@@ -20,4 +20,4 @@ $orderColumns = $navigator->getOrderLink();
 
 
 
-//include '/templates/list.php';
+include '/templates/list.php';
