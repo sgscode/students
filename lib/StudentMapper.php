@@ -73,7 +73,7 @@ class StudentMapper
                                 FROM students WHERE code=:code");
         $STH->bindValue(":code", $code);
         $STH->execute();
-        $STH->setFetchMode(PDO::FETCH_CLASS, "Student");
+        $STH->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Student");
         return $STH->fetch();
     }
 
@@ -99,7 +99,7 @@ class StudentMapper
         $STH->bindValue(":request", $userReqest);
 
         $STH->execute();
-        return $STH->fetchAll(PDO::FETCH_CLASS, "Student");
+        return $STH->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Student");
     }
 
     public function getCountRecords($reqest)
