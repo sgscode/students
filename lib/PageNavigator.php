@@ -28,31 +28,31 @@ class PageNavigator
 
     public function getOrderLink()
     {
-        $orderArrow = "";
+        $linkOrderArrow = "";
         $linkArray = array();
 
         if ($this->orderDirection === "DESC") {
-            $orderArrow = $this->arrowDesc;
+            $linkOrderArrow = $this->arrowDesc;
             $this->orderDirection = "ASC";
         } else {
-            $orderArrow = $this->arrowAsc;
+            $linkOrderArrow = $this->arrowAsc;
             $this->orderDirection = "DESC";
         }
 
-        foreach ($this->columns as $key => $value) {
+        foreach ($this->columns as $columnName => $linkName) {
 
-            if ($key === $this->orderColumn) {
-                $linkText = $orderArrow . $value;
+            if ($columnName === $this->orderColumn) {
+                $linkFullName = $linkOrderArrow . $linkName;
             } else {
-                $linkText = $value;
+                $linkFullName = $linkName;
             }
 
-            $data = ["orderColumn" => $key,
+            $queryString = ["orderColumn" => $columnName,
                 "orderDirection" => $this->orderDirection,
                 "userSearch" => $this->userSearch
             ];
 
-            $linkArray[$linkText] = $_SERVER['PHP_SELF'] . '?' . http_build_query($data);
+            $linkArray[$linkFullName] = $_SERVER['PHP_SELF'] . '?' . http_build_query($queryString);
         }
 
         return $linkArray;
@@ -63,14 +63,14 @@ class PageNavigator
         $pageArray = array();
         $pageCount = ceil($this->countRecord / $this->recordPerPage);
 
-        for ($i = 0; $i < $pageCount; $i++) {
-            $startRecord = $i * $this->recordPerPage;
-            $data = ["startRecord" => $startRecord,
+        for ($pageNumber = 0; $pageNumber < $pageCount; $pageNumber++) {
+            $startRecord = $pageNumber * $this->recordPerPage;
+            $queryString = ["startRecord" => $startRecord,
                 "orderColumn" => $this->orderColumn,
                 "orderDirection" => $this->orderDirection,
                 "userSearch" => $this->userSearch
             ];
-            $pageArray[$i + 1] = $_SERVER['PHP_SELF'] . '?' . http_build_query($data);
+            $pageArray[$pageNumber + 1] = $_SERVER['PHP_SELF'] . '?' . http_build_query($queryString);
         }
 
         return $pageArray;

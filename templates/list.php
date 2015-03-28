@@ -11,9 +11,9 @@
   <table class="table table-bordered">
 
     <tr>
-      <?php foreach ($orderColumns as $key => $value) { ?>  
+      <?php foreach ($orderColumns as $linkName => $url) { ?>  
         <th>
-          <a href="<?= $value ?>"><?= $key ?></a> 
+          <a href="<?= h($url) ?>"><?= $linkName ?></a> 
         </th>
       <?php } ?>
     </tr>
@@ -31,11 +31,11 @@
 
   <nav>
     <ul class="pagination">
-      <?php foreach ($countPage as $key => $value) { ?>
-        <li <?php if ($startRecord == ($key - 1) * $recordPerPage): ?>
+      <?php foreach ($countPage as $linkName => $url) { ?>
+        <li <?php if ($startRecord == ($linkName - 1) * $recordPerPage): ?>
             class="active"
           <?php endif; ?>>
-          <a href="<?= $value ?>"><?= $key ?></a>
+          <a href="<?= h($url) ?>"><?= $linkName ?></a>
         </li>
       <?php } ?>
     </ul>
