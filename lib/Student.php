@@ -4,6 +4,7 @@ class Student
 {
 
     const CODE_LENGTH = 32;
+
     protected $name = "";
     protected $surname = "";
     protected $gender = "";
@@ -14,11 +15,10 @@ class Student
     protected $residence = "";
     protected $code = "";
     protected $errorsText = [];
-   
 
     public function generateCode()
     {
-        
+
         $string = "qwertyuiopasdfghjklzxcvbnm1234567890";
         $strLen = mb_strlen($string);
         $newString = "";
@@ -36,17 +36,18 @@ class Student
             $sentData[$field] = trim($data);
         }
 
-        if (isset($sentData['code'])) {
-            $this->code = $sentData['code'];
+        if (isset($sentData['gender'])) {
+            $this->gender = $sentData['gender'];
+        }
+        if (isset($sentData['residence'])) {
+            $this->residence = $sentData['residence'];
         }
         $this->name = $sentData['name'];
         $this->surname = $sentData['surname'];
-        $this->gender = $sentData['gender'];
         $this->groupNumber = $sentData['groupNumber'];
         $this->email = $sentData['email'];
         $this->yearOfBirth = $sentData['yearOfBirth'];
         $this->scores = $sentData['scores'];
-        $this->residence = $sentData['residence'];
     }
 
     public function checkFields()
@@ -55,15 +56,15 @@ class Student
         $numRegExp = "/^[0-9]+$/";
         $mailRegExp = "/@/";
         $groupRegExp = "/^[0-9а-яa-zё]{5}$/ui";
-        
+
         if (!preg_match($charRegExp, $this->name)) {
             $this->errorsText["name"] = "должно состоять только из букв и быть длиной от 1 до 100 символов";
         }
         if (!preg_match($charRegExp, $this->surname)) {
             $this->errorsText["surname"] = "должна состоять только из букв и быть длиной от 1 до 100 символов";
         }
-        if (!isset($this->gender)) {
-            $this->errorsText["sex"] = "Пол неверно введен или отсутствует";
+        if (!isset($this->gender)||$this->gender==="") {
+            $this->errorsText["gender"] = "Пол неверно введен или отсутствует";
         }
         if (!preg_match($groupRegExp, $this->groupNumber)) {
             $this->errorsText["groupNumber"] = "должен содержать 5 символов";
@@ -77,7 +78,7 @@ class Student
         if (!preg_match($numRegExp, $this->yearOfBirth) || $this->yearOfBirth < 1900 || $this->yearOfBirth > 2015) {
             $this->errorsText["yearOfBirth"] = "должен быть не меньше 1900 и не больше 2005";
         }
-        if (!isset($this->residence)) {
+        if (!isset($this->residence)||$this->residence==="") {
             $this->errorsText["residence"] = "Место рождения неверно введено или отсутствует";
         }
 

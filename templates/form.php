@@ -47,11 +47,15 @@
       <input type="number" class="form-control" id="yearOfBirth" name="yearOfBirth" value="<?= h($student->getYearOfBirth()) ?>">
     </div>
 
-    <label>Укажите ваш пол</label>
+    <label><?php if ($student->getErrors("gender")): ?> <span style="color: #a94442">Вы не указали пол</span>
+            <?php else:?> Укажите ваш пол
+            <?php endif;?>
+    </label>
 
-    <div class="radio">
+    <div class="radio h">
       <label>
-        <input type="radio" name="gender"  value="male" checked>
+        <input type="radio" name="gender"  value="male"
+            <?php if ($student->getGender() == 'male'): ?>checked<?php endif; ?>>
         Мужской
       </label>
     </div>
