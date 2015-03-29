@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>Main</title>
-    <link rel="stylesheet" href="templates/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="templates/bootstrap/sticky-footer-navbar.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/sticky-footer-navbar.css">
   </head>
   <body>
     <nav class="navbar navbar-default navbar-static-top">

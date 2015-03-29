@@ -39,12 +39,12 @@
     
     <div class="form-group <?php if (isset($err["scores"])):?> has-error <?php endif; ?>">
       <label class="control-label" for="scores">Количество баллов <?= $student->getErrors("scores") ?> </label>
-      <input type="text" class="form-control" id="scores" name="scores" value="<?= h($student->getScores()) ?>">
+      <input type="number" class="form-control" id="scores" name="scores" value="<?= h($student->getScores()) ?>">
     </div>
     
     <div class="form-group <?php if (isset($err["yearOfBirth"])):?> has-error <?php endif; ?>">
       <label class="control-label" for="yearOfBirth">Год рождения <?= $student->getErrors("yearOfBirth") ?> </label>
-      <input type="text" class="form-control" id="yearOfBirth" name="yearOfBirth" value="<?= h($student->getYearOfBirth()) ?>">
+      <input type="number" class="form-control" id="yearOfBirth" name="yearOfBirth" value="<?= h($student->getYearOfBirth()) ?>">
     </div>
 
     <label>Укажите ваш пол</label>
