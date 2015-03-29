@@ -3,7 +3,7 @@
 require_once '/lib/bootstrap.php';
 
 $section = 'formpage';
-$cookieXsrf = setXsrfCookie();
+$cookieXsrf = XsrfUtil::setXsrfCookie();
 $student = new Student();
 $emailExist = false;
 $errorXsrf = '';

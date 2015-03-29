@@ -10,11 +10,9 @@ class StudentMapper
         $this->DBH = $DBH;
     }
 
-    protected function bindField(PDOStatement $statment, Student $student, $code = false)
+    protected function bindField(PDOStatement $statment, Student $student)
     {
-        if ($code) {
-            $statment->bindValue(':code', $student->getCode());
-        }
+        $statment->bindValue(':code', $student->getCode());
         $statment->bindValue(':name', $student->getName());
         $statment->bindValue(':surname', $student->getSurname());
         $statment->bindValue(':gender', $student->getGender());
@@ -33,7 +31,7 @@ class StudentMapper
                                               VALUES (:name, :surname, :gender, 
                                                       :groupNumber, :email, :yearOfBirth,
                                                       :scores, :residence, :code)");
-        $this->bindField($STH, $student, true);
+        $this->bindField($STH, $student);
         $STH->execute();
     }
 
@@ -44,7 +42,7 @@ class StudentMapper
                                     groupnumber=:groupNumber, email=:email, scores=:scores,
                                     year_of_birth=:yearOfBirth, residence=:residence 
                                 WHERE code=:code");
-        $this->bindField($STH, $student, true);
+        $this->bindField($STH, $student);
         $STH->execute();
     }
 
