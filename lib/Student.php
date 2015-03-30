@@ -14,7 +14,15 @@ class Student
     protected $scores = "";
     protected $residence = "";
     protected $code = "";
-    protected $errorsText = [];
+    protected $errors = ["name" => false,
+        "surname" => false,
+        "gender" => false,
+        "groupNumber" => false,
+        "email" => false,
+        "yearOfBirth" => false,
+        "scores" => false,
+        "residence" => false,
+        "code" => false];
 
     public function generateCode()
     {
@@ -48,50 +56,56 @@ class Student
         $this->email = $sentData['email'];
         $this->yearOfBirth = $sentData['yearOfBirth'];
         $this->scores = $sentData['scores'];
+        
+        $this->checkFields();
     }
 
     public function checkFields()
     {
+        foreach ($this->errors as $error) {
+            $error = false;
+        }
+
         $charRegExp = "/^[а-яa-zё-]{1,100}$/ui";
         $numRegExp = "/^[0-9]+$/";
         $mailRegExp = "/@/";
         $groupRegExp = "/^[0-9а-яa-zё]{5}$/ui";
 
         if (!preg_match($charRegExp, $this->name)) {
-            $this->errorsText["name"] = "должно состоять только из букв и быть длиной от 1 до 100 символов";
+            $this->errors["name"] = true;
         }
         if (!preg_match($charRegExp, $this->surname)) {
-            $this->errorsText["surname"] = "должна состоять только из букв и быть длиной от 1 до 100 символов";
+            $this->errors["surname"] = true;
         }
-        if (!isset($this->gender)||$this->gender==="") {
-            $this->errorsText["gender"] = "Пол неверно введен или отсутствует";
+        if (!isset($this->gender) || $this->gender === "") {
+            $this->errors["gender"] = true;                                                                                                                       //должна состоять только из букв и быть длиной от 1 до 100 символов";
         }
         if (!preg_match($groupRegExp, $this->groupNumber)) {
-            $this->errorsText["groupNumber"] = "должен содержать 5 символов";
+            $this->errors["groupNumber"] = true;
         }
         if (!preg_match($mailRegExp, $this->email)) {
-            $this->errorsText["email"] = "должен содержать @";
+            $this->errors["email"] = true;
         }
         if (!preg_match($numRegExp, $this->scores) || $this->scores <= 0 || $this->scores > 400) {
-            $this->errorsText["scores"] = "должно быть не более 400";
+            $this->errors["scores"] = true;
         }
         if (!preg_match($numRegExp, $this->yearOfBirth) || $this->yearOfBirth < 1900 || $this->yearOfBirth > 2015) {
-            $this->errorsText["yearOfBirth"] = "должен быть не меньше 1900 и не больше 2005";
+            $this->errors["yearOfBirth"] = true;
         }
-        if (!isset($this->residence)||$this->residence==="") {
-            $this->errorsText["residence"] = "Место рождения неверно введено или отсутствует";
+        if (!isset($this->residence) || $this->residence === "") {
+            $this->errors["residence"] = true;
         }
 
-        return $this->errorsText;
+        if (array_search(true, $this->errors)) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
-    public function getErrors($key)
+    public function getError($key)
     {
-        if (isset($this->errorsText[$key])) {
-            return $this->errorsText[$key];
-        } else {
-            return "";
-        }
+        return $this->errors[$key];
     }
 
     public function getName()
