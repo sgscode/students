@@ -16,14 +16,16 @@ class PageNavigator
     protected $orderColumn = "";
     protected $recordPerPage = "";
     protected $countRecord = "";
+    protected $phpSelf = "";
 
-    public function __construct($userSearch, $order, $orderColumn, $recordPerPage, $countRecord)
+    public function __construct($userSearch, $order, $orderColumn, $recordPerPage, $countRecord, $phpSelf)
     {
         $this->userSearch = $userSearch;
         $this->orderDirection = $order;
         $this->orderColumn = $orderColumn;
         $this->recordPerPage = $recordPerPage;
         $this->countRecord = $countRecord;
+        $this->phpSelf = $phpSelf;
     }
 
     public function getOrderLink()
@@ -52,7 +54,7 @@ class PageNavigator
                 "userSearch" => $this->userSearch
             ];
 
-            $linkArray[$linkFullName] = $_SERVER['PHP_SELF'] . '?' . http_build_query($queryString);
+            $linkArray[$linkFullName] = $this->phpSelf . '?' . http_build_query($queryString);
         }
 
         return $linkArray;
@@ -70,7 +72,7 @@ class PageNavigator
                 "orderDirection" => $this->orderDirection,
                 "userSearch" => $this->userSearch
             ];
-            $pageArray[$pageNumber + 1] = $_SERVER['PHP_SELF'] . '?' . http_build_query($queryString);
+            $pageArray[$pageNumber + 1] = $this->phpSelf . '?' . http_build_query($queryString);
         }
 
         return $pageArray;

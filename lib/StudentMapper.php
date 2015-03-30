@@ -71,7 +71,7 @@ class StudentMapper
                                 FROM students WHERE code=:code");
         $STH->bindValue(":code", $code);
         $STH->execute();
-        $STH->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Student");
+        $STH->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Student");
         return $STH->fetch();
     }
 
@@ -82,9 +82,9 @@ class StudentMapper
         $columnRegExp = "/^(name|surname|groupnumber|scores)$/ui";
         $numRegExp = "/^[0-9]+$/";
         $userReqest = "%" . $reqest . "%";
-
+        
         if (!preg_match($orderRegExp, $order) || !preg_match($columnRegExp, $orderColumn) || !preg_match($numRegExp, $startRecord) || !preg_match($numRegExp, $countPerPage)) {
-            return "error reqest";
+            throw new Exception('Request Failed. Error in the query string');
         }
 
         $STH = $this->DBH->prepare("SELECT name, surname, groupNumber, scores
@@ -97,7 +97,7 @@ class StudentMapper
         $STH->bindValue(":request", $userReqest);
 
         $STH->execute();
-        return $STH->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Student");
+        return $STH->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Student");
     }
 
     public function getCountRecords($reqest)
