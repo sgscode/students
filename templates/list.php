@@ -11,33 +11,33 @@
   <table class="table table-bordered">
 
     <tr>
-      <?php foreach ($orderColumns as $key => $value) { ?>  
+      <?php foreach ($orderColumns as $linkName => $url): ?>  
         <th>
-          <a href="<?= $value ?>"><?= $key ?></a> 
+          <a href="<?= h($url) ?>"><?= $linkName ?></a> 
         </th>
-      <?php } ?>
+      <?php endforeach; ?>
     </tr>
 
-    <?php foreach ($students as $student) { ?>
+    <?php foreach ($students as $student) : ?>
       <tr>
-        <td><?= hlw(h($student->getName()), h($userSearch)) ?></td>
-        <td><?= hlw(h($student->getSurname()), h($userSearch)) ?> </td>
-        <td><?= hlw(h($student->getGroupNumber()), h($userSearch)) ?> </td>
-        <td><?= hlw(h($student->getScores()), h($userSearch)) ?> </td>
+        <td><?= highlighting(h($student->getName()), h($userSearch)) ?></td>
+        <td><?= highlighting(h($student->getSurname()), h($userSearch)) ?> </td>
+        <td><?= highlighting(h($student->getGroupNumber()), h($userSearch)) ?> </td>
+        <td><?= highlighting(h($student->getScores()), h($userSearch)) ?> </td>
       </tr>
-    <?php } ?>
+    <?php endforeach; ?>
 
   </table>
 
   <nav>
     <ul class="pagination">
-      <?php foreach ($countPage as $key => $value) { ?>
-        <li <?php if ($startRecord == ($key - 1) * 10): ?>
+      <?php foreach ($countPage as $pageNumber => $url) : ?>
+        <li <?php if ($startRecord == ($pageNumber - 1) * $recordPerPage): ?>
             class="active"
           <?php endif; ?>>
-          <a href="<?= $value ?>"><?= $key ?></a>
+          <a href="<?= h($url) ?>"><?= $pageNumber ?></a>
         </li>
-      <?php } ?>
+      <?php endforeach; ?>
     </ul>
   </nav>
 </div>

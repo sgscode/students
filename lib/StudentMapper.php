@@ -10,11 +10,9 @@ class StudentMapper
         $this->DBH = $DBH;
     }
 
-    protected function bindField(PDOStatement $statment, Student $student, $code = false)
+    protected function bindField(PDOStatement $statment, Student $student)
     {
-        if ($code) {
-            $statment->bindValue(':code', $student->getCode());
-        }
+        $statment->bindValue(':code', $student->getCode());
         $statment->bindValue(':name', $student->getName());
         $statment->bindValue(':surname', $student->getSurname());
         $statment->bindValue(':gender', $student->getGender());
@@ -33,7 +31,7 @@ class StudentMapper
                                               VALUES (:name, :surname, :gender, 
                                                       :groupNumber, :email, :yearOfBirth,
                                                       :scores, :residence, :code)");
-        $this->bindField($STH, $student, true);
+        $this->bindField($STH, $student);
         $STH->execute();
     }
 
@@ -44,7 +42,7 @@ class StudentMapper
                                     groupnumber=:groupNumber, email=:email, scores=:scores,
                                     year_of_birth=:yearOfBirth, residence=:residence 
                                 WHERE code=:code");
-        $this->bindField($STH, $student, true);
+        $this->bindField($STH, $student);
         $STH->execute();
     }
 
@@ -59,22 +57,21 @@ class StudentMapper
         return $STH->fetchColumn();
     }
 
-    public function isCodeUsed(Student $student)
+    public function isCodeExist($code)
     {
-        $code = $student->getCode();
         $STH = $this->DBH->prepare("SELECT count(*) FROM students WHERE code=:code");
         $STH->bindValue(":code", $code);
         $STH->execute();
         return $STH->fetchColumn();
     }
 
-    public function fetchStudent($code)
+    public function fetchStudentByCode($code)
     {
         $STH = $this->DBH->prepare("SELECT name, surname, email, groupNumber, scores, year_Of_Birth as yearOfBirth, residence, gender, code
                                 FROM students WHERE code=:code");
         $STH->bindValue(":code", $code);
         $STH->execute();
-        $STH->setFetchMode(PDO::FETCH_CLASS, "Student");
+        $STH->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Student");
         return $STH->fetch();
     }
 
@@ -85,9 +82,9 @@ class StudentMapper
         $columnRegExp = "/^(name|surname|groupnumber|scores)$/ui";
         $numRegExp = "/^[0-9]+$/";
         $userReqest = "%" . $reqest . "%";
-
+        
         if (!preg_match($orderRegExp, $order) || !preg_match($columnRegExp, $orderColumn) || !preg_match($numRegExp, $startRecord) || !preg_match($numRegExp, $countPerPage)) {
-            return "error reqest";
+            throw new Exception('Request Failed. Error in the query string');
         }
 
         $STH = $this->DBH->prepare("SELECT name, surname, groupNumber, scores
@@ -100,7 +97,7 @@ class StudentMapper
         $STH->bindValue(":request", $userReqest);
 
         $STH->execute();
-        return $STH->fetchAll(PDO::FETCH_CLASS, "Student");
+        return $STH->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Student");
     }
 
     public function getCountRecords($reqest)

@@ -2,20 +2,19 @@
 
 require_once '/lib/bootstrap.php';
 
-
-$cookieXsrf = setXsrfCookie();
-$mapper = new StudentMapper($DBH);
+$section = 'formpage';
+$cookieXsrf = XsrfUtil::setXsrfCookie();
 $student = new Student();
 $emailExist = false;
 $errorXsrf = '';
 
-if ($cookieCode) {
-    $student = $mapper->fetchStudent($cookieCode);
+if ($loggedIn) {
+    $student = $mapper->fetchStudentByCode($cookieCode);
 }
 
 if (isset($_POST['submit'])) {
     $formXsrf = isset($_POST['xsrfForm']) ? $_POST['xsrfForm'] : '';
-    if ($formXsrf == $cookieXsrf) {
+    if ($formXsrf === $cookieXsrf) {
         $student->setFields($_POST);
         if ($mapper->isEmailUsed($student)) {
             $emailExist = true;
@@ -33,8 +32,6 @@ if (isset($_POST['submit'])) {
     }
 }
 
-
-
 function updateStudent(Student $student, StudentMapper $mapper)
 {
     $mapper->updateStudent($student);
@@ -45,15 +42,15 @@ function updateStudent(Student $student, StudentMapper $mapper)
 function createStudent(Student $student, StudentMapper $mapper)
 {
     $student->generateCode();
-    while ($mapper->isCodeUsed($student)) {
+    $code=$student->getCode();
+    while ($mapper->isCodeExist($code)) {
         $student->generateCode();
+        $code=$student->getCode();
     }
     $mapper->createStudent($student);
     setcookie('studentcode', $student->getCode(), strtotime('+5 year'), '/');
     header('Location: listpage.php?success=create');
     die();
 }
-
-
 
 include '/templates/form.php';
