@@ -4,7 +4,7 @@
       <div class="alert alert-danger" role="alert"><?= $errorXsrf; ?></div>   
   <?php endif; ?>
   <h3>
-    <?php if ($cookieCode == ''): ?>
+    <?php if (!$loggedIn): ?>
         Регистрация
     <?php else : ?>
         Редактировать профиль

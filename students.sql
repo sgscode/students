@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Мар 25 2015 г., 13:15
+-- Время создания: Мар 31 2015 г., 15:09
 -- Версия сервера: 5.6.20-log
 -- Версия PHP: 5.5.15
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `students` (
   `scores` int(3) NOT NULL,
   `residence` enum('local','notlocal') NOT NULL,
   `code` varchar(32) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=93 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=95 ;
 
 --
 -- Дамп данных таблицы `students`
@@ -135,7 +135,9 @@ INSERT INTO `students` (`id`, `name`, `surname`, `gender`, `groupnumber`, `email
 (89, 'Ivan', 'Ivanov', 'male', 'grp98', 'ivan@98', 1998, 198, 'local', 'byuhvcxqttbx82c3n6x98'),
 (90, 'petr', 'petrov', 'female', 'gr001', 'petr@ry', 2001, 222, 'local', '0y45a3i3xdkvglsh7x7pd8p5gvhlhnzi'),
 (91, 'semen', 'semenov', 'female', '23qww', 'sem@enov.ru', 2002, 333, 'notlocal', 'js11252o4w90lrdvqxoz1qim6pewxv0y'),
-(92, 'alex', 'alexov', 'male', 'asdfg', 'ale@x', 2000, 321, 'local', 'wpm2ef1a5zvdu86wged4baiftefgwwfg');
+(92, 'alex', 'alexov', 'male', 'asdfg', 'ale@x', 2000, 321, 'local', 'wpm2ef1a5zvdu86wged4baiftefgwwfg'),
+(93, 'семен', 'семенов', 'male', '123qw', 'sdsad@kjbkjn', 1988, 123, 'local', 'x3d7iq0m8uvqbp73erhgst69izj4a05t'),
+(94, 'кирилл', 'петров', 'male', '12345', 'pet@lkkjlkjlk', 1988, 333, 'local', 'x2dvfp1wqkml3dhuh003hf6kr4a3nfjl');
 
 --
 -- Indexes for dumped tables
@@ -155,7 +157,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=93;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=95;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

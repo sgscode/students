@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
         }
         $err = $student->checkFields();
         if (!$err && !$emailExist) {
-            if ($cookieCode == '') {
+            if (!$loggedIn) {
                 createStudent($student, $mapper);
             } else {
                 updateStudent($student, $mapper);

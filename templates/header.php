@@ -16,7 +16,7 @@
             class="active"
             <?php endif; ?>>
             <a href="formpage.php" >
-              <?php if ($cookieCode == ''): ?>
+              <?php if (!$loggedIn): ?>
                 Регистрация
               <?php else : ?>
                 Редактировать профиль
