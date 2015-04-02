@@ -42,10 +42,14 @@ function updateStudent(Student $student, StudentMapper $mapper)
 function createStudent(Student $student, StudentMapper $mapper)
 {
     $student->generateCode();
-    $code=$student->getCode();
-    while ($mapper->isCodeExist($code)) {
-        $student->generateCode();
-        $code=$student->getCode();
+    $code = $student->getCode();
+    for ($i = 1; $i < 100; $i++) {
+        if ($mapper->isCodeExist($code)) {
+            $student->generateCode();
+            $code = $student->getCode();
+        } else {
+            break;
+        }
     }
     $mapper->createStudent($student);
     setcookie('studentcode', $student->getCode(), strtotime('+5 year'), '/');

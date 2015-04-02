@@ -1,5 +1,6 @@
 <?php
 
+mb_internal_encoding("UTF-8");
 require 'lib/config.php';
 require_once 'lib/functions.php';
 spl_autoload_register(function ($class) {
@@ -14,6 +15,8 @@ $mapper = new StudentMapper($DBH);
 
 $section = '';
 $cookieCode = isset($_COOKIE['studentcode']) ? $_COOKIE['studentcode'] : '';
-$loggedIn = $mapper->isCodeExist($cookieCode);
+if ($cookieCode){
+    $loggedIn = $mapper->isCodeExist($cookieCode);
+}
 
 

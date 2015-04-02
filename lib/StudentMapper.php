@@ -87,7 +87,7 @@ class StudentMapper
             throw new Exception('Request Failed. Error in the query string');
         }
 
-        $STH = $this->DBH->prepare("SELECT name, surname, groupNumber, scores
+        $STH = $this->DBH->prepare("SELECT name, surname, email, groupNumber, scores, year_Of_Birth as yearOfBirth, residence, gender, code
                                 FROM students
                                 WHERE name LIKE :request OR surname LIKE :request OR groupnumber LIKE :request OR scores LIKE :request
                                 ORDER BY $orderColumn $order LIMIT :start,  :countPerPage");
